@@ -1,0 +1,64 @@
+.loginBox {
+  display: flex;
+  flex-direction: column;
+  // height: 100vh;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  max-width: 320px;
+  border: 1px solid #00000023;
+  padding: 16px;
+  border-radius: 6px;
+
+  :global {
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
+
+  & > div:not(.ant-space) {
+    width: 100%;
+
+    input {
+      border: 0;
+      height: 48px;
+      font-size: 18px;
+      line-height: 36px;
+      caret-color: #0af;
+      box-shadow: none !important;
+
+      &::-webkit-input-placeholder {
+        font-size: 16px;
+        color: #0af;
+        font-weight: 100;
+      }
+    }
+  }
+
+  input::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    height: 1px;
+    width: 100vw;
+    background-color: #0af;
+    transition: width 1s ease-in 1s;
+  }
+
+  input:focus:after {
+    width: 0;
+  }
+
+  :global {
+    .ant-space-align-center {
+      justify-content: center;
+    }
+  }
+}
+
+.title {
+  -webkit-text-stroke: 1px #0af;
+  -webkit-text-fill-color: transparent;
+  font-size: 30px;
+  color: #fff;
+}

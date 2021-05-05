@@ -1,15 +1,15 @@
-import { app, BrowserWindow, protocol } from "electron";
-import createProtocol from "umi-plugin-electron-builder/lib/createProtocol";
-import path from "path";
+import { app, BrowserWindow, protocol } from 'electron';
+import createProtocol from 'umi-plugin-electron-builder/lib/createProtocol';
+import path from 'path';
 // import installExtension, {
 //   REACT_DEVELOPER_TOOLS,
 // } from 'electron-devtools-installer';
 
-const isDevelopment = process.env.NODE_ENV === "development";
+const isDevelopment = process.env.NODE_ENV === 'development';
 let mainWindow: BrowserWindow;
 
 protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { secure: true, standard: true } },
+  { scheme: 'app', privileges: { secure: true, standard: true } },
 ]);
 
 function createWindow() {
@@ -18,35 +18,37 @@ function createWindow() {
     height: 600,
     webPreferences: {
       contextIsolation: true,
-      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js'),
     },
     transparent: true,
     // frame: false,
   });
   if (isDevelopment) {
-    mainWindow.loadURL("http://localhost:31668");
+    mainWindow.loadURL('http://localhost:31668');
     mainWindow.webContents.openDevTools();
   } else {
-    createProtocol("app");
-    mainWindow.loadURL("app://./index.html");
+    createProtocol('app');
+    mainWindow.loadURL('app://./index.html');
   }
-  require("./config/menu"); // 清空menu菜单
+  require('./config/menu'); // 清空menu菜单
+  require('./controller'); // 注册controller
 }
 
-app.on("ready", async () => {
+app.on('ready', async () => {
   // if (isDevelopment) {
   //   await installExtension(REACT_DEVELOPER_TOOLS);
   // }
   createWindow();
 });
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on("activate", () => {
+app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
